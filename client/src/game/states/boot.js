@@ -11,21 +11,22 @@ Boot.prototype = {
   },
 
   create: function () {
-    game.stage.disableVisibilityChange = true; // So that game doesn't stop when window loses focus.
+    game.disableVisibilityChange = true; // So that game doesn't stop when window loses focus.
     game.input.maxPointers = 1;
     AudioPlayer.initialize();
 
     if (game.device.desktop) {
-      game.stage.scale.pageAlignHorizontally = true;
+      game.scale.pageAlignHorizontally = true;
     } else {
-      game.stage.scaleMode = Phaser.StageScaleMode.SHOW_ALL;
-      game.stage.scale.minWidth =  480;
-      game.stage.scale.minHeight = 260;
-      game.stage.scale.maxWidth = 640;
-      game.stage.scale.maxHeight = 480;
-      game.stage.scale.forceLandscape = true;
-      game.stage.scale.pageAlignHorizontally = true;
-      game.stage.scale.setScreenSize(true);
+      game.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+      game.scale.isFullScreen  =  true;
+      game.scale.minWidth =  screen.width;
+      game.scale.minHeight = screen.height;
+      game.scale.maxWidth = screen.width;
+      game.scale.maxHeight = screen.height;
+      game.scale.forceLandscape = true;
+      game.scale.pageAlignHorizontally = true;
+      game.scale.setScreenSize(true);
     }
 
     game.state.start('Preloader');

@@ -41,6 +41,9 @@ Level.prototype = {
   },
 
   create: function () {
+    touchControl = game.plugins.add(Phaser.Plugin.TouchControl);
+    touchControl.inputEnable();
+
     level = this;
     this.lastFrameTime;
     this.deadGroup = [];

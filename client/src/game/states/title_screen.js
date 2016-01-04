@@ -2,15 +2,15 @@ var Fader = require("../util/fader");
 
 function TitleScreen() {};
 
-var titleOffsetX = 55;
-var titleOffsetY = 20;
+var titleOffsetX = OTX-10;
+var titleOffsetY = 60;
 
-var buttonOffsetX = 40;
-var startButtonOffsetY = 275;
-var howToButtonOffsetY = 360;
+var buttonOffsetX = OTX+23;
+var startButtonOffsetY = 293;
+var howToButtonOffsetY = 363;
 
-var bombermanOffsetX = 305;
-var bombermanOffsetY = 265;
+var bombermanOffsetX = OTX+315;
+var bombermanOffsetY = 225;
 
 var firstBombOffsetX = bombermanOffsetX + 12;
 var firstBombOffsetY = bombermanOffsetY + 57;
@@ -18,27 +18,27 @@ var firstBombOffsetY = bombermanOffsetY + 57;
 var secondBombOffsetX = bombermanOffsetX + 185;
 var secondBombOffsetY = bombermanOffsetY + 141;
 
-var cloudRightmostPointX = 700;
+var cloudRightmostPointX = 1080;
 
 var cloudTweenDuration = 80000;
 
 var cloudData = [
-	{startingX: 400, startingY: 50, image: "cloud1"},
-	{startingX: -150, startingY: 140, image: "cloud1"},
-	{startingX: 375, startingY: 200, image: "cloud1"},
-	{startingX: 330, startingY: -20, image: "cloud1"},
-	{startingX: 110, startingY: 110, image: "cloud2"},
-	{startingX: -300, startingY: 140, image: "cloud2"},
-	{startingX: -300, startingY: -30, image: "cloud2"},
-	{startingX: 0, startingY: 140, image: "cloud3"},
-	{startingX: -75, startingY: 200, image: "cloud4"},
-	{startingX: 200, startingY: 20, image: "cloud5"},
-	{startingX: 100, startingY: -20, image: "cloud5"},
-	{startingX: -200, startingY: 250, image: "cloud6"},
-	{startingX: 40, startingY: 80, image: "cloud7"},
-	{startingX: 200, startingY: 180, image: "cloud1"},
-	{startingX: -150, startingY: 20, image: "cloud5"},
-	{startingX: 300, startingY: 230, image: "cloud4"}
+	// {startingX: 400, startingY: 50, image: "cloud1"},
+	// {startingX: -150, startingY: 140, image: "cloud1"},
+	// {startingX: 375, startingY: 200, image: "cloud1"},
+	// {startingX: 330, startingY: -20, image: "cloud1"},
+	// {startingX: 110, startingY: 110, image: "cloud2"},
+	// {startingX: -300, startingY: 140, image: "cloud2"},
+	// {startingX: -300, startingY: -30, image: "cloud2"},
+	// {startingX: 0, startingY: 140, image: "cloud3"},
+	// {startingX: -75, startingY: 200, image: "cloud4"},
+	// {startingX: 200, startingY: 20, image: "cloud5"},
+	// {startingX: 100, startingY: -20, image: "cloud5"},
+	// {startingX: -200, startingY: 250, image: "cloud6"},
+	// {startingX: 40, startingY: 80, image: "cloud7"},
+	// {startingX: 200, startingY: 180, image: "cloud1"},
+	// {startingX: -150, startingY: 20, image: "cloud5"},
+	// {startingX: 300, startingY: 230, image: "cloud4"}
 ];
 
 TitleScreen.prototype = {
@@ -53,7 +53,7 @@ TitleScreen.prototype = {
 		var startButtonTween = this.createInitialButtonTween(this.startButton, 200);
 		var howToButtonTween = this.createInitialButtonTween(this.howToButton, 400);
 	
-		var title = game.add.image(titleOffsetX, titleOffsetY - 200, TEXTURES, "titlescreen/title.png");
+		var title = game.add.image(titleOffsetX, titleOffsetY - 220, TEXTURES, "titlescreen/newtitle.png");
 	
 		var titleTween = game.add.tween(title);
 		titleTween.to({y: titleOffsetY}, 500, Phaser.Easing.Bounce.Out, true, 200).start();
@@ -86,7 +86,7 @@ TitleScreen.prototype = {
 		var cloudLeftmostPointX = -260;
 		var tweenDuration = cloudTweenDuration * (game.camera.width - cloudLeftmostPointX) / game.camera.width;
 
-		game.add.image(0, 0, TEXTURES, "titlescreen/background.png");
+		game.add.image(0, 0, TEXTURES, "titlescreen/background2.png");
 
 		for(var x = 0; x < cloudData.length; x++) {
 			(function(data) {
@@ -108,7 +108,7 @@ TitleScreen.prototype = {
 	},
 
 	createButtons: function() {
-		this.startButton = game.add.button(buttonOffsetX - 250, startButtonOffsetY, TEXTURES, function() {
+		this.startButton = game.add.button(buttonOffsetX - 490, startButtonOffsetY, TEXTURES, function() {
 			if(!this.showingInstructions && !this.justClickedOutOfHowTo) {
 				Fader.fadeOut(function() {
 					game.state.start("Lobby");
@@ -117,11 +117,11 @@ TitleScreen.prototype = {
 		}, this, "titlescreen/buttons/startbutton_02.png", "titlescreen/buttons/startbutton_01.png");
 		this.startButton.setDownSound(buttonClickSound);
 
-		this.howToButton = game.add.button(buttonOffsetX - 250, howToButtonOffsetY, TEXTURES, function() {
+		this.howToButton = game.add.button(buttonOffsetX - 490, howToButtonOffsetY, TEXTURES, function() {
 			if(!this.showingInstructions && !this.justClickedOutOfHowTo) {
 				this.showingInstructions = true;
 				Fader.fadeOut(function() {
-					this.howTo = game.add.image(0, 0, TEXTURES, "titlescreen/howtoplay.png");
+					this.howTo = game.add.image(OTX+0, 0, TEXTURES, "titlescreen/howtoplay.png");
 					this.justClickedHowTo = true;
 					Fader.fadeIn();
 				}, this);

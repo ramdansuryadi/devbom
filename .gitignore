@@ -1,0 +1,5 @@
+mobile/platforms
+mobile/www
+node_modules
+client/original
+*Thumbs.db

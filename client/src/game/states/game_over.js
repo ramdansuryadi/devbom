@@ -10,11 +10,14 @@ GameOver.prototype = {
 	},
 
 	create: function() {
-		var textToDisplay = this.winByDefault ? "     No other players remaining.\n              You win by default." : "       Game Over. Winner: " + this.winnerColor;
-		textToDisplay += "\n\nPress Enter to return to main menu.";
-		var textObject = game.add.text(game.camera.width / 2, game.camera.height / 2, textToDisplay);
+		var textToDisplay = this.winByDefault ? "NO OTHER PLAYERS REMAINING.\nYOU WIN BY DEFAULT." : "GAME OVER.\nWINNER: " + this.winnerColor;
+		textToDisplay += "\n\n";
+		var textObject = game.add.text(game.world.centerX, game.world.centerY - 50, textToDisplay, {align: "center",autoUpperCase: true});
 		textObject.anchor.setTo(0.5, 0.5);
 		TextConfigurer.configureText(textObject, "white", 28);
+		buttonEnter = game.add.button(game.world.centerX - 95, 300, TEXTURES, this.actionOnClickOk,this,"lobby/buttons/game_over_ok_button_2.png","lobby/buttons/game_over_ok_button_1.png");
+		buttonEnter.input.useHandCursor = true;
+		buttonEnter.inputEnabled = true;
 	},
 
 	update: function() {
@@ -25,7 +28,16 @@ GameOver.prototype = {
 
 	returnToLobby: function() {
 		game.state.start("Lobby");
-	}
+	},
+
+	actionOnClickOk: function(){
+    	this.returnToLobby();
+	}	
 }
 
 module.exports = GameOver;
+
+
+
+ 
+

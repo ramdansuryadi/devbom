@@ -2,16 +2,16 @@ var TextConfigurer = require('../util/text_configurer');
 
 var screenWidth = 600;
 
-var xOffset = 100 - screenWidth;
+var xOffset = OTX+100 - screenWidth;
 var yOffset = 60;
 
-var headerXOffset = 150 - screenWidth;
+var headerXOffset = OTX+150 - screenWidth;
 var headerYOffset = 65;
 
-var winnerPicXOffset = 225 - screenWidth;
+var winnerPicXOffset = OTX+225 - screenWidth;
 var winnerPicYOffset = 310;
 
-var defaultTextXOffset = 220 - screenWidth;
+var defaultTextXOffset = OTX+220 - screenWidth;
 var defaultTextYOffset = 220;
 
 var singleWinnerText = "Winner is...";

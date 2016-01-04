@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="io.cordova.dumberman" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>DumberMan Mobile</name>
+    <description>
+        DumberMan Mobile online application adaptation from https://limitless-brook-9339.herokuapp.com
+    </description>
+    <author email="support@phonegap.com" href="http://phonegap.com">
+        PhoneGap Team
+    </author>
+    <feature name="http://api.phonegap.com/1.0/device" />
+    <preference name="permissions" value="none" />
+    <preference name="orientation" value="landscape" />
+    <preference name="target-device" value="universal" />
+    <preference name="fullscreen" value="true" />
+    <preference name="webviewbounce" value="false" />
+    <preference name="prerendered-icon" value="true" />
+    <preference name="stay-in-webview" value="false" />
+    <preference name="ios-statusbarstyle" value="black-opaque" />
+    <preference name="StatusBarOverlaysWebView" value="true" />
+    <preference name="StatusBarStyle" value="default" />
+    <preference name="detect-data-types" value="true" />
+    <preference name="exit-on-suspend" value="false" />
+    <preference name="show-splash-screen-spinner" value="false" />
+    <preference name="disable-cursor" value="false" />
+    <preference name="android-minSdkVersion" value="17" />
+    <preference name="android-installLocation" value="auto" />
+    <preference name="KeyBoardShrinksView" value="false" />
+    <preference name="DisallowOverscroll" value="true"/>
+    <preference name="UIWebViewBounce" value="false" />
+    <preference name="BackupWebStorage" value="false" />
+
+    <content src="index.html" />
+    <access origin="*" />
+</widget>

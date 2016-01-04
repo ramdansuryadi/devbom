@@ -1,14 +1,18 @@
-window.game = new Phaser.Game(600, 600, Phaser.AUTO, '');
+window.game = new Phaser.Game(1080, 600, Phaser.AUTO, '');
 window.player = null;
 window.socket = null;
 window.level = null;
 window.TEXTURES = "bbo_textures";
+window.MAP_THUMBNAILS = "map_thumbnails";
+window.OTX = 240;
 
 startGame();
 
 function startGame() {
-	socket = io("https://limitless-brook-9339.herokuapp.com:443");
+    socket = io("https://powerful-chamber-6580.herokuapp.com:443");
     // socket = io("http://localhost:8000");
+    // socket = io("http://192.168.123.152:8000");
+    // socket = io("http://192.168.123.27:8000");
 
     require("./game/mods/phaser_enhancements");
 

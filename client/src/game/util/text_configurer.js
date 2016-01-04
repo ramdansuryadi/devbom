@@ -1,5 +1,5 @@
 exports.configureText = function(text, color, size) {
-	text.font = "Carter One";
+	text.font = "Oswald";
 	text.fill = color;
 	text.fontSize = size;
 }
