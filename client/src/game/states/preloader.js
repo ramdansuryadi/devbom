@@ -35,6 +35,7 @@ Preloader.prototype = {
 
     this.load.atlasJSONHash("bbo_textures", "assets/textures/bbo_textures.png", "assets/textures/bbo_textures.json");
     this.load.atlasJSONHash("map_thumbnails", "assets/maps/map_thumbnails.png", "assets/maps/map_thumbnails.json");
+    this.load.atlasJSONHash("dm_textures", "assets/textures/dm_textures.png", "assets/textures/dm_textures.json");
 
     this.load.tilemap("map_01", "assets/maps/map_01.json", null, Phaser.Tilemap.TILED_JSON);
     this.load.tilemap("map_02", "assets/maps/map_02.json", null, Phaser.Tilemap.TILED_JSON);

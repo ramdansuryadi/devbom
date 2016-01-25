@@ -3,14 +3,15 @@ window.player = null;
 window.socket = null;
 window.level = null;
 window.TEXTURES = "bbo_textures";
+window.DM_TEXTURES = "dm_textures";
 window.MAP_THUMBNAILS = "map_thumbnails";
 window.OTX = 240;
 
 startGame();
 
 function startGame() {
-    socket = io("https://powerful-chamber-6580.herokuapp.com:443");
-    // socket = io("http://localhost:8000");
+   // socket = io("https://powerful-chamber-6580.herokuapp.com:443");
+    socket = io("http://localhost:8000");
     // socket = io("http://192.168.123.152:8000");
     // socket = io("http://192.168.123.27:8000");
 
@@ -27,3 +28,12 @@ function startGame() {
 
 	game.state.start('Boot');
 };
+
+Object.size = function(obj) {
+  var size = 0, key;
+  for (key in obj) {
+      if (obj.hasOwnProperty(key)) size++;
+  }
+  return size;
+};
+

@@ -100,6 +100,7 @@ Level.prototype = {
   },
 
   onNewRound: function(data) {
+     this.updateProfile(data.players, data.maxWin);
     this.createDimGraphic();
     var datAnimationDoe = new RoundEndAnimation(game, data.completedRoundNumber, data.roundWinnerColors);
     this.gameFrozen = true;
@@ -119,6 +120,7 @@ Level.prototype = {
 
   onEndGame: function(data) {
     // TODO: Tear down the state.
+    this.updateProfile(data.players);
     this.createDimGraphic();
     this.gameFrozen = true;
     var animation = new RoundEndAnimation(game, data.completedRoundNumber, data.roundWinnerColors);
@@ -219,7 +221,118 @@ Level.prototype = {
         this.remotePlayers[data.id] = new RemotePlayer(data.x, data.y, data.id, data.color);
       }
     }
+    this.buildProfile(this.players, this.playerId);
   },
+  buildProfile: function(players, playerId){
+    this.profile = [];
+    var j = 0;
+    var initPosX = 865; 
+    var initPosY = 20;
+    var starlength = 2;
+    var count = Object.size(players);
+    for(var i in players) {
+      var data = players[i];
+      if(data.id == playerId){
+        var posX = 40; 
+        var posY = 20;
+      } else {
+        var posX = initPosX + ((j%2)*105); 
+        var posY = initPosY + ((Math.floor(j/2))*115);
+        if(j == (count-2) && (j%2 < 1)){
+          posX += 50;
+        }
+        j++;
+      }
+      this.profile[data.id] = {
+        image: game.add.image(posX, posY, DM_TEXTURES, 'Profile_'+data.color+'.png'),
+        stars: this.createStars(starlength, posX, posY, data.id == playerId),
+        impulse: this.createImpulse(data.id, posX, posY, data.id == playerId),
+      };
+      if(data.id != playerId){
+        this.profile[data.id].image.scale.setTo(.5,.5);
+      }
+    }
+  },
+
+   createStars : function(starlength, posX, posY, isMe){
+    var stars = [];
+    posX += (isMe) ? 4: 2;
+    posY += (isMe) ? 153: 76;
+    for (var i = 0; i < starlength; i++) {
+      stars[i] = game.add.image(posX, posY, DM_TEXTURES, 'Profile_Star.png');
+      if(!isMe){
+        stars[i].scale.setTo(.5,.5);
+      }
+      stars[i].visible = false;
+      posX += (isMe) ? 53: 26;
+    };
+    return stars;  
+  },
+  createImpulse : function(id, posX, posY, isMe){
+    posX += (isMe) ? -15: -7;
+    posY += (isMe) ? -18: -9;
+    var impulse = game.add.sprite(posX, posY, DM_TEXTURES, "attention01.png");
+    if(!isMe){
+      impulse.scale.setTo(.5,.5);
+    }
+    var impulse_sprites = [];
+    for (var i = 0; i < 11; i++) {
+      var j = (i > 5) ? 5-(i-5): i;
+      j = ("0" + (j + 1)).slice(-2);
+      impulse_sprites.push('attention'+j+'.png');
+    };
+    impulse.visible = false;
+    impulse.animations.add(id+"impulse_animation", impulse_sprites, 17, true);
+    impulse.animations.play(id+"impulse_animation");
+    return impulse;  
+  },
+  updateProfile: function(players, maxWin){
+    for(var i in players) {
+      var data = players[i];
+      var stars = this.profile[data.id].stars;
+      var score = data.wins;
+      for (var i = 0; i < stars.length; i++) {
+        stars[i].visible = (i < score);
+      };
+      if(maxWin && (score >= (maxWin-1))){
+        this.profile[data.id].impulse.visible = true;
+      }
+    }
+  },
+
+  deleteProfile: function(players, playerId, id){
+    this.profile[id].image.destroy();
+    var stars = this.profile[id].stars;
+    this.profile[id].impulse.destroy();
+    for (var i = 0; i < stars.length; i++) {
+      stars[i].destroy();
+    };
+    delete this.profile[id];
+    // var j = 0;
+    // var initPosX = 865; 
+    // var initPosY = 20;
+    // var count = Object.size(players);
+    // for(var i in players) {
+      // var data = players[i];
+      // if(data.id == playerId){
+      //   var posX = 40; 
+      //   var posY = 20;
+      // } else {
+      //   var posX = initPosX + ((j%2)*105); 
+      //   var posY = initPosY + ((Math.floor(j/2))*115);
+      //   if(j == (count-2) && (j%2 < 1)){
+      //     posX += 50;
+      //   }
+      //   j++;
+      // }
+      // this.profile[data.id].image.position.x = posX;
+      // this.profile[data.id].image.position.y = posY;
+      // if(data.id != playerId){
+      //   this.profile[data.id].image.scale.setTo(.5,.5);
+      // }
+    // }
+  },
+
 
   tearDownMap: function() {
       this.map.destroy();
@@ -285,6 +398,7 @@ Level.prototype = {
 
     delete this.remotePlayers[data.id];
     delete this.players[data.id];
+     this.deleteProfile(this.players, this.playerId, data.id);
   },
 
   onKillPlayer: function(data) {
@@ -341,5 +455,28 @@ Level.prototype = {
      this.items[row + "." + col] = item;
 
      game.world.addAt(item, 2);
+  },
+   allDie: function(){
+    // endText.setText('Time Up Kids !!!')
+    imageTimeUp = game.add.image(game.world.centerX-210, game.world.centerY-50, DM_TEXTURES, "Times_Up.png");
+    imageTimeUp;
+    // game.world.remove(textThing);
+    this.gameFrozen = false;
+    player.manualBomb();
+    player.speedDie();
+  },
+
+  animateDie: function(killedPlayer) {
+    var x = killedPlayer.position.x-17;
+    var y = killedPlayer.position.y-34;
+    var death = game.add.sprite(x, y, DM_GAMEPLAY, "death/death_01.png");
+    var death_sprites = [];
+    for (var i = 0; i < 12; i++) {
+      var j = ("0" + (i+1)).slice(-2);
+      death_sprites.push('death/death_'+j+'.png');
+    };
+    death.animations.add("death_animation", death_sprites, 12, true);
+    death.animations.play("death_animation", 12, false, true);
   }
+
 };
